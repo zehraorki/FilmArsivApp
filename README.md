@@ -2,10 +2,10 @@ FİLM ARŞİV SİSTEMİ
 
 Kullanılan Teknolojiler:
 
-Framework: .NET SDK 8  (ASP.NET Core MVC)
-Dil: C#
-Arayüz: HTML5, CSS, Bootstrap 5
-IDE: VS Code
+* Framework: .NET SDK 8  (ASP.NET Core MVC)
+* Dil: C#
+* Arayüz: HTML5, CSS, Bootstrap 5
+* IDE: VS Code
 
 Bu proje Nesne Yönelimli Programlama dersi kapsamında geliştirilmiştir.
 
