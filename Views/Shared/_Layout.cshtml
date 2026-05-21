@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Film Arşivi</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="icon" type="image/x-icon" href="~/img/favicon.ico">
+
+</head>
+
+<body>
+    <header class="bg-white border-bottom shadow-sm">
+        <div class="container">
+            <div class="row align-items-center py-3">
+                <div class="col-md-4">
+                    <a asp-controller="Yonetim" asp-action="Listele">
+                        <img src="~/img/FilmLogo.png" alt="Film Logo" style="height: 55px; width: auto;">
+                    </a>
+                </div>
+
+                <div class="col-md-8 d-flex justify-content-end align-items-center">
+                    @if (FilmArsivApp.Controllers.AccountController.AktifKullanici != null)
+                    {
+                        <span class="text-dark mr-3">
+                            Merhaba, <strong>@FilmArsivApp.Controllers.AccountController.AktifKullanici</strong>
+                        </span>
+                        <a asp-controller="Account" asp-action="Logout"
+                        class="btn btn-sm btn-outline-danger shadow-sm">Çıkış Yap</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Login" class="text-dark mx-3 font-weight-bold"
+                        style="text-decoration:none;">Giriş Yap</a>
+                        <a asp-controller="Account" asp-action="Register" class="btn btn-sm text-white px-4 shadow-sm"
+                        style="background-color: #b22222; border-radius: 20px; font-weight: bold;">Kayıt Ol</a>
+                    }
+
+                      <a class="nav-link text-dark ms-3" asp-controller="Yonetim" asp-action="Favorilerim">
+                    <i class="fa-regular fa-heart fa-lg"></i>
+                </a>
+                </div>
+
+               
+
+            </div>
+
+            <div class="row pb-3 border-top pt-2">
+                <div class="col-12">
+                    <nav class="navbar navbar-expand navbar-light p-0">
+                        <ul class="navbar-nav w-100 d-flex justify-content-center font-weight-bold"
+                            style="font-size: 13px;">
+                            <li class="nav-item px-2">
+                                <a class="nav-link active" asp-controller="Yonetim" asp-action="Listele">
+                                    <i class="bi bi-house-door"></i> Ana Sayfa
+                                </a>
+                            </li>
+                            <li class="nav-item border-right px-3">
+                                <a class="nav-link text-dark" asp-controller="Yonetim" asp-action="Listele"
+                                    asp-route-secilenTur="Aksiyon">Aksiyon Filmleri</a>
+                            </li>
+                            <li class="nav-item border-right px-3">
+                                <a class="nav-link text-dark" asp-controller="Yonetim" asp-action="Listele"
+                                    asp-route-secilenTur="Komedi">Komedi Filmleri</a>
+                            </li>
+                            <li class="nav-item border-right px-3">
+                                <a class="nav-link text-dark" asp-controller="Yonetim" asp-action="Listele"
+                                    asp-route-secilenTur="Animasyon">Animasyon Filmleri</a>
+                            </li>
+                            <li class="nav-item px-2">
+                                <a class="nav-link text-dark" asp-controller="Yonetim" asp-action="Ekle">
+                                    <i class="bi bi-plus-circle"></i> Film Ekle
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main role="main" class="container my-4 flex-grow-1">
+        @RenderBody()
+    </main>
+    <div class="scroll-buttons"
+        style="position: fixed; bottom: 20px; right: 20px; z-index: 99; display: flex; flex-direction: column; gap: 10px;">
+        <button onclick="scrollToTop()" id="btnTop" class="btn btn-danger rounded-circle shadow" title="En Üste Çık">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button onclick="scrollToBottom()" id="btnBottom" class="btn btn-dark rounded-circle shadow" title="En Alta İn">
+            <i class="fas fa-arrow-down"></i>
+        </button>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container text-center">
+            <span class="text-muted">&copy; 2026 - Film Arşiv Sistemi | Tüm Hakları Saklıdır.</span>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>

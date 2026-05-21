@@ -1,0 +1,104 @@
+@model FilmArsivApp.Models.FilmFiltreModeli
+
+@{
+    ViewData["Title"] = "Film Arşivi";
+}
+
+<div class="hero-section position-relative mb-5 mt-4" style="background-color: #f8f9fa;">
+    <div class="container-fluid p-0 text-center">
+        <img src="/img/filmafis.png" class="img-fluid" alt="Film Afişi"
+            style="max-height: 70vh; width: 100%; object-fit: contain;">
+        <div class="position-absolute w-100 d-flex justify-content-center" style="bottom: 15%;">
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary"><i class="bi bi-film"></i> Film Arşiv Sistemi</h2>
+        <a asp-action="Ekle" class="btn btn-success"><i class="bi bi-plus-circle"></i> Yeni Film Ekle</a>
+    </div>
+
+    <form asp-controller="Yonetim" asp-action="Listele" method="get"
+        class="row g-3 mb-4 bg-light p-3 rounded shadow-sm">
+        <div class="col-md-4">
+            <select asp-for="SecilenTur" asp-items="@(new SelectList(Model.Turler))" class="form-select">
+                <option value="">Tüm Türler</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <input type="text" asp-for="AramaMetni" class="form-control" placeholder="Film adı ara..." />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Filtrele</button>
+        </div>
+    </form>
+
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+        @foreach (var item in Model.Filmler!)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 position-relative">
+                    <span class="position-absolute top-0 end-0 badge bg-warning text-dark m-2 fs-6">
+                        <i class="bi bi-star-fill"></i> @item.Puan
+                    </span>
+                    <a asp-action="Detay" asp-route-id="@item.Id">
+                        @if (!string.IsNullOrEmpty(item.AfisYolu))
+                        {
+                            <img src="~/afisler/@item.AfisYolu" class="card-img-top" alt="@item.FilmAdi"
+                        style="height: 350px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <div class="bg-secondary text-white d-flex flex-column align-items-center justify-content-center"
+                        style="height: 340px; cursor: pointer;">
+                                <i class="bi bi-image mb-2" style="font-size: 2.5rem;"></i>
+                                <span class="small text-light">Afiş Yüklenmedi</span>
+                            </div>
+                        }
+                    </a>
+
+                    <div class="card-body d-flex flex-column p-3">
+                        <h5 class="card-title font-weight-bold text-truncate mb-1">
+                            <a asp-action="Detay" asp-route-id="@item.Id" class="text-dark"
+                            style="text-decoration:none;">@item.FilmAdi</a>
+                        </h5>
+
+                        <p class="card-text text-muted small mb-2" style="text-align: justify;">
+                            <span class="badge badge-danger px-2 py-1 mr-1">@item.Tur</span>
+                            <span class="badge badge-light border text-dark px-2 py-1">@item.YayinYili</span>
+                        </p>
+                        <p class="card-text text-muted mb-2" style="text-align: justify; font-size: 13px;">
+                            <i class="bi bi-file-earmark-text"></i>
+                            @if (item.Aciklama != null && item.Aciklama.Length > 100)
+                            {
+                                @(item.Aciklama.Substring(0, 100) + "...")
+                            }
+                            else
+                            {
+                                @item.Aciklama
+                            }
+                        </p>
+
+                        <div class="mt-auto d-flex gap-2">
+                            <a asp-action="Guncelle" asp-route-id="@item.Id"
+                            class="btn btn-outline-primary btn-sm flex-grow-1">Düzenle</a>
+                            <form asp-action="Sil" asp-route-id="@item.Id" method="post"
+                            onsubmit="return confirm('Bu filmi arşivden silmek istediğinize emin misiniz?');"
+                            class="flex-grow-1">
+                                <button type="submit" class="btn btn-outline-danger btn-sm w-100">Sil</button>
+                            </form>
+                        </div>
+                        <form asp-action="FavoriGuncelle" asp-controller="Yonetim" method="post" class="mt-2">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn w-100 btn-outline-danger">
+                                <i class="bi bi-heart"></i> Favorilere Ekle
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

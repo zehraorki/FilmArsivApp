@@ -1,0 +1,35 @@
+@model List<FilmArsivApp.Models.Film>
+
+<div class="container mt-5 py-4">
+    <h2 class="text-center font-weight-bold mb-5" style="color: #2c3e50;">Favori Filmlerim</h2>
+
+    <div class="row">
+        @if (!Model.Any())
+        {
+            <p>Henüz favori filmleriniz yok. Keşfetmeye başlayın!</p>
+        }
+        else
+        {
+            @foreach (var film in Model)
+            {
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm text-center p-2" style="border-radius: 15px; border: none;">
+                        <div style="height: 200px; display: flex; align-items: center; justify-content: center;">
+                            <img src="~/afisler/@film.AfisYolu" class="card-img-top" alt="@film.FilmAdi"
+                        style="max-height: 180px; width: auto; object-fit: contain;">
+                        </div>
+                        <div class="card-body p-2">
+                            <h6 class="card-title font-weight-bold text-truncate" style="font-size: 0.9rem;">@film.FilmAdi</h6>
+                            <form asp-action="FavoriGuncelle" asp-controller="Yonetim" method="post">
+                                <input type="hidden" name="id" value="@film.Id" />
+                                <button type="submit" class="btn btn-sm btn-outline-danger w-100 rounded-pill">
+                                    Çıkar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

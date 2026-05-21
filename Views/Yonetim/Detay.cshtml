@@ -1,0 +1,37 @@
+@model FilmArsivApp.Models.Film
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm p-4">
+                <img src="~/afisler/@Model.AfisYolu" class="img-fluid rounded" alt="@Model.FilmAdi" 
+                     style="max-height: 500px; object-fit: contain;">
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <h1 class="display-5 font-weight-bold">@Model.FilmAdi</h1>
+            <hr>
+
+            <div class="description mb-4">
+                <p class="text-secondary" style="line-height: 1.8;">
+                    @(string.IsNullOrEmpty((Model as dynamic).Aciklama) ? "Bu ürün için henüz bir açıklama girilmemiştir." : (Model as dynamic).Aciklama)
+                </p>
+            </div>
+
+            <div class="attributes bg-light p-3 rounded mb-4">
+                <ul class="list-unstyled mb-0">
+                    @if (Model is FilmArsivApp.Models.Film k)
+                    {
+                        <li class="mb-2"><strong>Yayın Yılı:</strong> @k.YayinYili</li>
+                        <li class="mb-2"><strong>Tür:</strong> @k.Tur</li>
+                        <li class="mb-2"><strong>Imdb Puan:</strong> @k.Puan</li>
+     
+                    }
+                    
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
